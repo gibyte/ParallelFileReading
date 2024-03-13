@@ -20,9 +20,9 @@ CreateFileWithContent(pathFile3, content3);
 
 Stopwatch stopwatch = Stopwatch.StartNew();
 var fileTasks = new Task<int>[] {
-            CountSpacesAsync("file1.txt"),
-            CountSpacesAsync("file2.txt"),
-            CountSpacesAsync("file3.txt")
+            CountSpacesAsync(pathFile1),
+            CountSpacesAsync(pathFile2),
+            CountSpacesAsync(pathFile3)
         };
 stopwatch.Stop(); // Останавливаем таймер
 
@@ -39,7 +39,6 @@ int totalSpacesInFolder = await ReadFilesInFolderAndCountSpacesAsync(pathFolder,
 readFolderStopwatch.Stop();
 Console.WriteLine($"Total spaces in folder: {totalSpacesInFolder}");
 Console.WriteLine($"Time taken to read folder: {readFolderStopwatch.ElapsedMilliseconds} ms");
-
 
 
 static void CreateFileWithContent(string filePath, string content)
@@ -61,8 +60,7 @@ static string GenerateRandomContent(int length)
 
 static async Task<int> CountSpacesAsync(string fileName)
 {
-    string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-    string text = await File.ReadAllTextAsync(filePath);
+    string text = await File.ReadAllTextAsync(fileName);
     return text.Count(char.IsWhiteSpace);
 }
 
